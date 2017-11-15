@@ -13,7 +13,6 @@ import org.testng.annotations.Test;
  * Created by VEREMENYUK_P on 11/14/2017.
  */
 
-@Test
 public class CreateFileTest {
     private Path dirPath = null;
     private String sDirPath = null;
@@ -44,6 +43,7 @@ public class CreateFileTest {
     }
 
     //Positive test: file creation
+    @Test(groups = "positive")
     public void newFileTest() {
         File file;
         boolean aBoolean;
@@ -60,6 +60,7 @@ public class CreateFileTest {
     }
 
     //Positive&negative test: attempt to create file with the same name, file deletion
+    @Test(groups = "positive")
     public void theSameFileTest() {
         File file;
         boolean aBoolean;
@@ -85,6 +86,7 @@ public class CreateFileTest {
     }
 
     //Negative test - attempt to create file with the wrong filename
+    @Test(groups = "negative")
     public void wrongFileNameTest() {
         File file;
         boolean aBoolean;
@@ -101,6 +103,7 @@ public class CreateFileTest {
     }
 
     //Negative test - attempt to create file in non existing directory
+    @Test(groups = "negative")
     public void nonExistingDirTest() {
         File file;
         boolean aBoolean;

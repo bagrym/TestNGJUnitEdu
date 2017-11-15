@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="0" total="3" passed="3">
+<testng-results skipped="0" failed="0" ignored="0" total="4" passed="4">
   <reporter-output>
   </reporter-output>
-  <suite name="Command line suite" duration-ms="47" started-at="2017-11-14T15:11:13Z" finished-at="2017-11-14T15:11:13Z">
+  <suite name="Suite1" duration-ms="49" started-at="2017-11-15T20:04:39Z" finished-at="2017-11-15T20:04:39Z">
     <groups>
+      <group name="negative">
+        <method signature="CreateFileTest.nonExistingDirTest()[pri:0, instance:Task3.CreateFileTest@27f674d]" name="nonExistingDirTest" class="Task3.CreateFileTest"/>
+        <method signature="CreateFileTest.wrongFileNameTest()[pri:0, instance:Task3.CreateFileTest@27f674d]" name="wrongFileNameTest" class="Task3.CreateFileTest"/>
+      </group> <!-- negative -->
+      <group name="positive">
+        <method signature="CreateFileTest.newFileTest()[pri:0, instance:Task3.CreateFileTest@27f674d]" name="newFileTest" class="Task3.CreateFileTest"/>
+        <method signature="CreateFileTest.theSameFileTest()[pri:0, instance:Task3.CreateFileTest@27f674d]" name="theSameFileTest" class="Task3.CreateFileTest"/>
+      </group> <!-- positive -->
     </groups>
-    <test name="Command line test" duration-ms="47" started-at="2017-11-14T15:11:13Z" finished-at="2017-11-14T15:11:13Z">
+    <test name="Regression1" duration-ms="49" started-at="2017-11-15T20:04:39Z" finished-at="2017-11-15T20:04:39Z">
       <class name="Task3.CreateFileTest">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:Task3.CreateFileTest@5ba23b66]" name="setUp" is-config="true" duration-ms="4" started-at="2017-11-14T18:11:13Z" finished-at="2017-11-14T18:11:13Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="newFileTest()[pri:0, instance:Task3.CreateFileTest@5ba23b66]" name="newFileTest" duration-ms="2" started-at="2017-11-14T18:11:13Z" finished-at="2017-11-14T18:11:13Z">
+        <test-method status="PASS" signature="newFileTest()[pri:0, instance:Task3.CreateFileTest@27f674d]" name="newFileTest" duration-ms="17" started-at="2017-11-15T23:04:39Z" finished-at="2017-11-15T23:04:39Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- newFileTest -->
-        <test-method status="PASS" signature="theSameFileTest()[pri:0, instance:Task3.CreateFileTest@5ba23b66]" name="theSameFileTest" duration-ms="3" started-at="2017-11-14T18:11:13Z" finished-at="2017-11-14T18:11:13Z">
+        <test-method status="PASS" signature="nonExistingDirTest()[pri:0, instance:Task3.CreateFileTest@27f674d]" name="nonExistingDirTest" duration-ms="0" started-at="2017-11-15T23:04:39Z" finished-at="2017-11-15T23:04:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- nonExistingDirTest -->
+        <test-method status="PASS" signature="theSameFileTest()[pri:0, instance:Task3.CreateFileTest@27f674d]" name="theSameFileTest" duration-ms="2" started-at="2017-11-15T23:04:39Z" finished-at="2017-11-15T23:04:39Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- theSameFileTest -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:Task3.CreateFileTest@5ba23b66]" name="tearDown" is-config="true" duration-ms="1" started-at="2017-11-14T18:11:13Z" finished-at="2017-11-14T18:11:13Z">
+        <test-method status="PASS" signature="wrongFileNameTest()[pri:0, instance:Task3.CreateFileTest@27f674d]" name="wrongFileNameTest" duration-ms="0" started-at="2017-11-15T23:04:39Z" finished-at="2017-11-15T23:04:39Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- tearDown -->
+        </test-method> <!-- wrongFileNameTest -->
       </class> <!-- Task3.CreateFileTest -->
-      <class name="base.FirstTest">
-        <test-method status="PASS" signature="test()[pri:0, instance:base.FirstTest@6debcae2]" name="test" duration-ms="12" started-at="2017-11-14T18:11:13Z" finished-at="2017-11-14T18:11:13Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- test -->
-      </class> <!-- base.FirstTest -->
-    </test> <!-- Command line test -->
-  </suite> <!-- Command line suite -->
+    </test> <!-- Regression1 -->
+  </suite> <!-- Suite1 -->
 </testng-results>
