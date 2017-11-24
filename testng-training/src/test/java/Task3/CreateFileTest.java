@@ -8,6 +8,7 @@ import java.io.IOException;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.testng.Assert;
 
 /**
  * Created by VEREMENYUK_P on 11/14/2017.
@@ -54,6 +55,7 @@ public class CreateFileTest {
             file = new File(sDirPath, fileName);
             aBoolean = file.createNewFile();
             System.out.println("\t" + "File created: " + aBoolean);
+            assertDirectoryFilesQty(1);
         } catch (IOException exception){
             System.out.println("\t" + exception.getMessage());
         }
@@ -67,19 +69,22 @@ public class CreateFileTest {
 
         System.out.println("The same filename test:");
 
-        try  {
+        try {
             file = new File(sDirPath, fileName);
             aBoolean = file.createNewFile();
             System.out.println("\t" + "File created: " + aBoolean);
 
             aBoolean = file.delete();
             System.out.println("\t" + "File deleted: " + aBoolean);
+            assertDirectoryFilesQty(0);
 
             aBoolean = file.createNewFile();
             System.out.println("\t" + "File created: " + aBoolean);
+            assertDirectoryFilesQty(1);
 
             aBoolean = file.delete();
             System.out.println("\t" + "File deleted: " + aBoolean);
+            assertDirectoryFilesQty(0);
         } catch (IOException exception) {
             System.out.println("\t" + exception.getMessage());
         }
@@ -115,7 +120,16 @@ public class CreateFileTest {
             aBoolean = file.createNewFile();
             System.out.println("\t" + "File created: " + aBoolean);
         } catch (IOException exception) {
+            String expectedErrorMessage = "The system cannot find the path specified";
+
+            Assert.assertEquals(exception.getMessage(), expectedErrorMessage);
             System.out.println("\t" + "Expected error message: " + exception.getMessage());
         }
+    }
+
+    public void assertDirectoryFilesQty(int expectedFilesQty) {
+        File[] files = dirPath.toFile().listFiles();
+        Assert.assertEquals(files.length, expectedFilesQty);
+        System.out.println("\t" + "Files qty: " + expectedFilesQty);
     }
 }
