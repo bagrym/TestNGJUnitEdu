@@ -4,9 +4,12 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
@@ -19,6 +22,8 @@ public class CreateFileTest {
     private String sDirPath = null;
     private String fileName = "test.txt";
     private String wrongFileName = "<>.txt";
+    private int fileCount = 0;
+    private List<Object[]> filesNames = new ArrayList<Object[]>();
 
     @BeforeClass
     //Create temp directory
@@ -44,8 +49,10 @@ public class CreateFileTest {
     }
 
     //Positive test: file creation
-    @Test(groups = "positive")
-    public void newFileTest() {
+    //@Test(groups = "positive", dataProvider = "StaticValues", dataProviderClass = data.DataProviders.class)
+    //@Test(groups = "positive", dataProvider = "GeneratedValues", dataProviderClass = data.DataProviders.class)
+    @Test(groups = "positive", dataProvider = "FileValues", dataProviderClass = data.DataProviders.class)
+    public void newFileTest(String fileName) {
         File file;
         boolean aBoolean;
 
@@ -54,8 +61,10 @@ public class CreateFileTest {
         try {
             file = new File(sDirPath, fileName);
             aBoolean = file.createNewFile();
-            System.out.println("\t" + "File created: " + aBoolean);
-            assertDirectoryFilesQty(1);
+            System.out.println("\t" + "File " + file.getName() + " created: " + aBoolean);
+            fileCount++;
+            assertDirectoryFilesQty(fileCount);
+            filesNames.add(new Object[]{fileName});
         } catch (IOException exception){
             System.out.println("\t" + exception.getMessage());
         }
@@ -66,27 +75,35 @@ public class CreateFileTest {
     public void theSameFileTest() {
         File file;
         boolean aBoolean;
+        String fileName = null;
 
         System.out.println("The same filename test:");
 
-        try {
-            file = new File(sDirPath, fileName);
-            aBoolean = file.createNewFile();
-            System.out.println("\t" + "File created: " + aBoolean);
+        for (int i = 0; i < filesNames.size(); i++) {
+            fileName = filesNames.get(i)[0].toString();
+            try {
+                file = new File(sDirPath, fileName);
+                aBoolean = file.createNewFile();
+                Assert.assertFalse(aBoolean);
+                System.out.println("\t" + "File " + file.getName() + " created: " + aBoolean);
 
-            aBoolean = file.delete();
-            System.out.println("\t" + "File deleted: " + aBoolean);
-            assertDirectoryFilesQty(0);
+                aBoolean = file.delete();
+                System.out.println("\t" + "File " + file.getName() + " deleted: " + aBoolean);
+                fileCount--;
+                assertDirectoryFilesQty(fileCount);
 
-            aBoolean = file.createNewFile();
-            System.out.println("\t" + "File created: " + aBoolean);
-            assertDirectoryFilesQty(1);
+                aBoolean = file.createNewFile();
+                System.out.println("\t" + "File " + file.getName() + " created: " + aBoolean);
+                fileCount++;
+                assertDirectoryFilesQty(fileCount);
 
-            aBoolean = file.delete();
-            System.out.println("\t" + "File deleted: " + aBoolean);
-            assertDirectoryFilesQty(0);
-        } catch (IOException exception) {
-            System.out.println("\t" + exception.getMessage());
+                aBoolean = file.delete();
+                System.out.println("\t" + "File " + file.getName() + " deleted: " + aBoolean);
+                fileCount--;
+                assertDirectoryFilesQty(fileCount);
+            } catch (IOException exception) {
+                System.out.println("\t" + exception.getMessage());
+            }
         }
     }
 
@@ -101,7 +118,7 @@ public class CreateFileTest {
         try {
             file = new File(sDirPath, wrongFileName);
             aBoolean = file.createNewFile();
-            System.out.println("\t" + "File created: " + aBoolean);
+            System.out.println("\t" + "File " + file.getName() + " created: " + aBoolean);
         } catch (IOException exception) {
             System.out.println("\t" + "Expected error message: " + exception.getMessage());
         }
@@ -118,7 +135,7 @@ public class CreateFileTest {
         try {
             file = new File(sDirPath + "blablabla", fileName);
             aBoolean = file.createNewFile();
-            System.out.println("\t" + "File created: " + aBoolean);
+            System.out.println("\t" + "File " + file.getName() + " created: " + aBoolean);
         } catch (IOException exception) {
             String expectedErrorMessage = "The system cannot find the path specified";
 
@@ -127,8 +144,10 @@ public class CreateFileTest {
         }
     }
 
+    //Utility method to assert directory files quantity
     public void assertDirectoryFilesQty(int expectedFilesQty) {
         File[] files = dirPath.toFile().listFiles();
+
         Assert.assertEquals(files.length, expectedFilesQty);
         System.out.println("\t" + "Files qty: " + expectedFilesQty);
     }
